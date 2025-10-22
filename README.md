@@ -215,3 +215,16 @@ ssh -p 2222 usuario@localhost   # ejemplo para la VM con hostfwd 2222
 sudo nmap -sP 192.168.x.0/24   # detecta hosts activos
 ```
 
+## 🧠 Conclusión
+
+Durante el desarrollo de esta práctica se comprendieron los procesos fundamentales para la **creación, configuración y comunicación de máquinas virtuales** en un entorno de virtualización con **QEMU/KVM**.  
+Se logró instalar exitosamente **Rocky Linux** y **Kali Linux**, configurando sus parámetros de red, almacenamiento y recursos de sistema. Ambas máquinas pudieron **comunicarse entre sí** mediante pruebas de `ping` y servicios SSH, validando la correcta configuración de la red virtual.
+
+Aunque no fue posible realizar la instalación completa de **Windows** por limitaciones de hardware (memoria y CPU insuficientes), se documentó el procedimiento teórico detallado para su implementación en equipos con mayores recursos, incluyendo el uso de controladores VirtIO y configuración de red.
+
+El trabajo permitió afianzar conocimientos sobre:
+- La administración y virtualización de sistemas operativos.  
+- El uso de herramientas como `virt-install`, `qemu-img` y `virt-manager`.  
+- El diseño de redes virtuales que permitan comunicación entre máquinas independientes.
+
+En conclusión, el laboratorio integró conceptos de **infraestructura virtual, redes y gestión de entornos Linux**, fortaleciendo la comprensión práctica del funcionamiento de los sistemas operativos y las tecnologías de virtualización en contextos académicos y profesionales.
