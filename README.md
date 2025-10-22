@@ -44,7 +44,6 @@ Dos opciones comunes:
 - Crear bridge (ejemplo, usando netplan o nmcli) y usar --network bridge=br0 en virt-install.
 - Requiere privilegios y potencialmente modificar la configuración de red del host.
 
-Para pruebas de la tarea puedes usar la opción A (network=default) — así te aseguras que todas las VMs puedan verse y comunicarse.
 ---
 
 ## 1) Crear máquina virtual: Rocky Linux (paso a paso)
@@ -73,7 +72,7 @@ virt-install \
 ```
 Si prefieres instalación por consola (no gráfica) usa --graphics none y --extra-args según ISO.
 
-- **1.4 Pasos dentro del instalador**
+**1.4 Pasos dentro del instalador**
 
 - Seleccionar idioma, zona horaria.
 - Elegir particionado (recomendado disco completo / automática).
@@ -81,13 +80,13 @@ Si prefieres instalación por consola (no gráfica) usa --graphics none y --extr
 - Crear usuario y contraseña root.
 - Instalar paquetes mínimos o servidor según necesidad.
 
-- **1.5 Arrancar VM una vez instalado**
+**1.5 Arrancar VM una vez instalado**
 ```bash
 virsh start rocky-vm
 virsh console rocky-vm   # console si config permitida
 # o usar virt-manager para conectarte por VNC/console
 ```
-- **1.6 Post-instalación (dentro del guest)**
+**1.6 Post-instalación (dentro del guest)**
 ```bash
 sudo dnf update -y
 sudo dnf install -y openssh-server qemu-guest-agent
@@ -96,14 +95,14 @@ sudo systemctl enable --now sshd qemu-guest-agent
 ---
 ## 2) Crear máquina virtual: Kali Linux (paso a paso)
 
-- **2.1 Descargar ISO**
+**2.1 Descargar ISO**
 Guarda la ISO en ~/vm/isos/kali.iso.
 
-- **2.2 Crear disco**
+**2.2 Crear disco**
 ```bash
 qemu-img create -f qcow2 ~/vm/images/kali.qcow2 30G
 ```
-- **2.3 Instalar con virt-install**
+**2.3 Instalar con virt-install**
 ```bash
 virt-install \
   --name kali-vm \
@@ -116,14 +115,14 @@ virt-install \
   --graphics vnc \
   --boot cdrom,hd
 ```
-- **2.4 Pasos en el instalador de Kali**
+**2.4 Pasos en el instalador de Kali**
 - Seleccionar “Graphical install” o “Install”.
 - Configurar idioma, teclado, red (DHCP o estático).
 - Particionado (guiado, LVM o manual).
 - Crear usuario (Kali ahora recomienda crear usuario normal y no root por defecto).
 - Instalar paquetes y esperar.
 
-- **2.5 Post-instalación**
+**2.5 Post-instalación**
 ```bash
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y openssh-server qemu-guest-agent
@@ -134,18 +133,18 @@ sudo systemctl enable --now ssh qemu-guest-agent
 >- IMPORTANTE: En este equipo no se instalará Windows por falta recursos (RAM/CPU/disk). 
 A continuación quedan las instrucciones teóricas completas para quien cuente con una máquina host con suficiente capacidad (mínimo 8 GB RAM disponibles, 100 GB disco libre recomendado).
 
-- **3.1 Requisitos y archivos necesarios**
+**3.1 Requisitos y archivos necesarios**
 
 - ISO de Windows 10/11 (o instalador)
 - ISO de drivers VirtIO (virtio-win ISO) para controladores de disco y red: virtio-win.iso
 - Disco qcow2 grande (ej. 60–80 GB)
 
-- **3.2 Crear disco**
+**3.2 Crear disco**
 ```bash
 qemu-img create -f qcow2 ~/vm/images/windows.qcow2 60G
 ```
 
-- **3.3 Instalar con virt-install (ejemplo)**
+**3.3 Instalar con virt-install (ejemplo)**
 ```bash
 virt-install \
   --name windows-vm \
@@ -162,13 +161,13 @@ virt-install \
 seleccionar los controladores desde virtio-win.iso → viostor para que Windows detecte el disco.
 - Instalar drivers de red NetKVM también desde virtio-win.iso.
 
-- **3.4 Configuración post-instalación (Windows)**
+**3.4 Configuración post-instalación (Windows)**
 
 - Instalar drivers virtio completos.
 - Habilitar RDP y/o instalar OpenSSH (Windows 10/11 tienen opción de OpenSSH).
 - Ajustar recursos si hace falta.
   
-- **3.5 Por qué NO instalar Windows en este host**
+**3.5 Por qué NO instalar Windows en este host**
 
 - Windows requiere mucho RAM y CPU durante la instalación y ejecución (especialmente con GUI).
 - Si tu PC tiene <8 GB RAM total o menos de 4 vCPU libres, la VM puede dejar el host sin memoria/respuesta.
@@ -176,12 +175,12 @@ seleccionar los controladores desde virtio-win.iso → viostor para que Windows 
 
 ### 4) Probar que todas las máquinas virtuales se comuniquen entre sí
 
-- **4.1 Requisitos para comunicación**
+**4.1 Requisitos para comunicación**
   
 - Todas las VMs deben estar en la misma red virtual (network=default o bridge=br0).
 - Servicios mínimos: tener SSH habilitado en las VMs Linux.
 
--- **4.2 Pasos de verificación (ejemplo)**
+**4.2 Pasos de verificación (ejemplo)**
 
 1. Listar interfaces y IPs en cada VM:
 Linux:
